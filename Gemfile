@@ -1,5 +1,14 @@
 source 'https://rubygems.org'
 
+gem 'carrierwave'
+gem 'rmagick', '2.13.4', :require => 'RMagick'
+gem 'devise'
+gem 'cancancan'
+gem 'seed_dump'
+gem 'redcarpet'
+gem 'rails_12factor', group: :production
+gem 'puma'
+gem "rack-timeout"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
@@ -36,9 +45,13 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rspec-rails', '~> 3.0'
+  gem 'rake'
 end
 
 group :development do
+  gem 'pry-byebug'
+  gem 'pry-rails'
+  gem 'better_errors'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
