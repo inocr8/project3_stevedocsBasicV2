@@ -8,5 +8,15 @@ development: &default
   host: stevedocsbasicv2_db_1
 
 test:
-  <<: *default
-  database: stevedocsbasicv2_test
+  adapter: postgresql
+  database: travis_ci_test
+  username: postgres
+
+production:
+  url:  <%= ENV["DATABASE_URL"] %>
+  adapter: postgresql
+  encoding: unicode
+  database: stevedocs_basic_v2_production
+  pool: <%= ENV["DB_POOL"] || ENV['MAX_THREADS'] || 5 %>
+  username: stevedocs_basic_v2
+  password: <%= ENV['STEVEDOCS_BASIC_V2_DATABASE_PASSWORD'] %>
