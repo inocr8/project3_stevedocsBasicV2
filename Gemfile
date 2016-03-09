@@ -8,7 +8,7 @@ gem 'seed_dump'
 gem 'redcarpet'
 gem 'rails_12factor', group: :production
 gem 'puma'
-gem "rack-timeout", group: :production
+gem "rack-timeout"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
