@@ -23,3 +23,17 @@
    font-size: 3em;
    margin-bottom: 50px;
  }
+
+ /* Admin page */
+ div.admin-links {
+     margin-left: 25px;
+ }
+ div.admin-links a {
+     background-color: #ff4081;
+     margin-top: 5px;
+     border: 0;
+     padding: 11px 14px;
+     color: #b6f4f2;
+     font-weight: bold;
+     text-decoration: none;
+ }
