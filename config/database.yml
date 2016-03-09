@@ -10,3 +10,10 @@ development: &default
 test:
   <<: *default
   database: stevedocsbasicv2_test
+
+
+production:
+  <<: *default
+  database: stevedocs_basic_v2_production
+  username: stevedocs_basic_v2
+  password: <%= ENV['STEVEDOCS_BASIC_V2_DATABASE_PASSWORD'] %>
