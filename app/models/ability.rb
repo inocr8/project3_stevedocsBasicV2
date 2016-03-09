@@ -8,14 +8,12 @@ class Ability
         can :manage, :all
     else
         can :read, :all
-        can [:create, :destroy], Booking
+        can [:create, :destroy], Library
         can :create, Comment
     end
 
-    if user.role? :talent
-        can :update, Speaker do |speaker|
-            ( speaker.name == user.name ) || ( speaker.email == user.email )
-        end
+    if user.role? :editor
+        can :update, Document
     end
   end
     # Define abilities for the passed in user here. For example:
