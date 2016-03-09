@@ -10,6 +10,18 @@ class UserImageUploader < CarrierWave::Uploader::Base
   storage :file
   # storage :fog
 
+  version :tiny do
+    process :resize_to_fill => [30,30]
+  end
+
+  version :thumb do
+    process :resize_to_fill => [300,150]
+  end
+
+  version :medium do
+    process :resize_to_fill => [600,300]
+  end
+
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
