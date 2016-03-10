@@ -1,2 +1,27 @@
-<h1>Languages#index</h1>
-<p>Find me in app/views/languages/index.html.erb</p>
+<h1>List of all languages</h1>
+
+<% if can? :create, Language %>
+  <%= link_to 'New language', new_language_path %>
+<% end %>
+
+<% @languages.each do |language| %>
+
+  <h2><%= link_to language.name, language_path(language) %> - (colour: <%= language.colour %>)</h2>
+
+  <%= link_to image_tag(language.language_image.thumb.url), language.language_image.medium.url %>
+
+  <% if language.documents.empty? == false %>
+    <h3>List of documents for this language:</h3>
+      <ul>
+        <% language.documents.each do |document| %>
+          <li><%= link_to document.name, document_path(document) %></li>
+        <% end %>
+      </ul>
+  <% else %>
+    <h4>New documents for <%= language.name %> to be added soon!</h4>
+  <% end %>
+
+  <%= link_to('Show', language_path(language)) %> <% if can? :update, language %><%= link_to('Edit', edit_language_path(language), method: :get) %><% end %> <% if can? :destroy, language %><%= link_to('Delete', language_path(language), method: :delete, data: {confirm: 'Delete this language? Are you sure?!'}) %><% end %>
+  <br /><br />
+
+<% end %>
