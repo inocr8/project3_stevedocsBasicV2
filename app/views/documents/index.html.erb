@@ -1,2 +1,46 @@
-<h1>Documents#index</h1>
-<p>Find me in app/views/documents/index.html.erb</p>
+<h1>List of all documents</h1>
+
+<% if can? :create, Document %>
+  <%= link_to 'New document', new_document_path %>
+<% end %>
+
+<% @documents.each do |document| %>
+
+  <h2><%= link_to document.name, document_path(document)  %></h2>
+
+  <%= link_to image_tag(document.document_image.thumb.url), document.document_image.medium.url %>
+
+  <p><%= document.short %></p>
+
+  <h4>Category: <%= link_to document.category.name, category_path(document.category) %><br />
+      Language: <%= link_to document.language.name, language_path(document.language) %><br />
+      Tags: <%= document.tags %></h4>
+
+  <% if can? :manage, :all %>
+    <h4>Number of times saved: <%= document.libraries.count %><br />
+        Number of comments: <%= document.comments.count %></h4>
+
+        <h3>Users who have saved this document:</h3>
+        <ul>
+        <% document.users.each do |user| %>
+            <li><h4><%= link_to image_tag(user.user_image.tiny.url), user %>&nbsp;&nbsp;<%= user.name %> (company: <%= user.company %>)</h4></li>
+        <% end %>
+        </ul>
+    </h4>
+  <% end %>
+
+  <% if !can? :manage, :all %>
+    <% if document.comments.empty? == false %>
+      <h3>Here are some comments for this document:</h3>
+        <ul>
+          <% document.comments.sample(5).each do |comment| %>
+            <li><h4><%= link_to image_tag(comment.user.user_image.tiny.url), comment.user %>&nbsp;&nbsp;<%= comment.user.name %> said:<br />"<%= comment.content %>"</h4></li>
+          <% end %>
+        </ul>
+    <% end %>
+   <% end %> 
+
+  <%= link_to('Show', document_path(document)) %> <%= link_to('Book', new_booking_path) %> <% if can? :update, document %><%= link_to('Edit', edit_document_path(document), method: :get) %><% end %> <% if can? :destroy, document %><%= link_to('Delete', document_path(document), method: :delete, data: {confirm: 'Delete this document? Are you sure?!'}) %><% end %>
+  <br /><br />
+  
+<% end %>

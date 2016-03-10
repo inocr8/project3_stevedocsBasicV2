@@ -1,2 +1,74 @@
-<h1>Documents#show</h1>
-<p>Find me in app/views/documents/show.html.erb</p>
+<% if can? :create, Document %>
+<%= link_to 'New document', new_document_path %>
+<% end %>
+
+<h1><%= @document.name %></h1>
+
+<% if can? :manage, :all %>
+<h4>Number of times saved: <%= @document.libraries.count %><br />
+  Number of comments: <%= @document.comments.count %></h4>
+
+  <h3>Users who have saved this document:</h3>
+  <ul>
+  <% @document.users.each do |user| %>
+    <li><h4><%= link_to image_tag(user.user_image.tiny.url), user %>&nbsp;&nbsp;<%= user.name %> (company: <%= user.company %>)</h4></li>
+    <% end %>
+  </ul>
+</h4>
+<% end %>
+
+<h2>Category: <%= link_to @document.category.name, category_path(document.category) %><br />
+    Language: <%= link_to @document.language.name, language_path(document.language) %><br />
+    Tags: <%= @document.tags %></h2>
+
+  <%= image_tag(@document.document_image.medium.url) %>
+
+  <h3><%= @document.content %></h3>
+
+  <% if @document.comments.empty? == false %>
+  <h4>Here are some comments on this document:</h4>
+  <ul>
+    <% @document.comments.each do |comment| %>
+    <li><h4><%= link_to image_tag(comment.user.user_image.tiny.url), comment.user %>&nbsp;&nbsp;<%= comment.user.name %> said:<br />"<%= comment.content %>"</h4></li>
+
+    <% if can? :update, comment %>
+    <%= link_to('Edit', edit_comment_path(comment), method: :get) %>
+    <% end %>
+
+    <% if can? :destroy, comment %>
+    <%= link_to('Delete', comment_path(comment), method: :delete, data: {confirm: 'Delete this comment? Are you sure?!'}) %>
+    <% end %>
+
+    <% end %>
+  </ul>
+  <% else %>
+  <h4>Would you like to add a comment for this document? Just use the form below</h4>
+  <% end %>
+
+  <% if current_user %>
+  <%= form_for(@comment) do |f| %>
+  <div class="field">
+    <%= f.label :content, 'Add a comment' %><br />
+    <%= f.text_area :content, rows: 6 %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :document_id, value: @document.id %>
+  </div>
+  <br />
+  <div class="actions">
+    <%= f.submit "Add comment" %>
+  </div>
+  <% end %>
+  <% end %>
+  <br /><br />
+  <% if can? :update, @document %>
+  <%= link_to('Edit', edit_document_path(@document), method: :get) %>
+  <% end %>
+
+  <% if can? :destroy, @document %>
+  <%= link_to('Delete', document_path(@document), method: :delete, data: {confirm: 'Delete this document? Are you sure?!'}) %>
+  <% end %>
+
+  <%= link_to('Save', new_library_path) %>
+  <%= link_to 'Index', documents_path %>
+  <%= link_to 'Back', :back %>
