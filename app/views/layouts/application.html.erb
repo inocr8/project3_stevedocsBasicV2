@@ -2,14 +2,56 @@
 <html>
 <head>
   <title>This is SteveDocs Basic</title>
-  <link rel="stylesheet" type="text/css" href="/normalize.css">
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'normalize' %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+<header>
+<nav>
+<div class="container-nav">
+  <div class="go-left">
+    <ul>
+      <li> <%= link_to 'home', root_path %> </li>
+      <li> <%= link_to 'documents', documents_path %> </li>
+      <li> <%= link_to 'languages', languages_path %> </li>
+      <li> <%= link_to 'categories', categories_path %> </li>
+    </ul>
+  </div>
+  <div class="logo go-right">
+    Welcome to SteveDocs Basic!
+  </div>
+  </div>
+</nav>
+</header>
+<div class="container">
+  <div class="login go-right">
+    <% if current_user %>
+      <%= current_user.email %>
+      <br>
+      <%= link_to "log out", destroy_user_session_path, method: :delete %> | <%= link_to "edit profile", edit_user_registration_path, method: :get %>
+    <% else %>
+      <%= link_to "sign in", new_user_session_path %>
+      <%= link_to "register", new_user_registration_path %>
+    <% end %>
+  </div>
+</div>
 
+<div class="container">
+<h1 class="notice"><%= notice %></h1>
+<h1 class="alert"><%= alert %></h1>
+</div>
+
+<div class="container">
 <%= yield %>
+</div>
+
+<footer>
+<div class="container-nav">
+  <a href=''>Terms &amp; Conditions</a> | <a href=''>Privacy Policy</a>
+  </div>
+</footer>
 
 </body>
 </html>

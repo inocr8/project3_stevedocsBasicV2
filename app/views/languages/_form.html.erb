@@ -1,0 +1,37 @@
+<%= form_for(@language) do |f| %>
+  <% if @language.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@language.errors.count, "error") %> prohibited this Language from being saved:</h2>
+
+      <ul>
+        <% @language.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, 'Language name' %><br />
+    <%= f.text_field :name, :size => 40 %>
+  </div>
+  <br />
+  <div class="field">
+    <%= f.label :colour, 'Colour' %><br />
+    <%= f.text_field :colour, :size => 40 %>
+  </div>
+  <br />
+  <div class="field">
+    <%= f.label :description, 'Description' %><br />
+    <%= f.text_area :description, rows: 10, cols: 40 %>
+  </div>
+  <br />
+  <div class="field">
+    <%= f.label :language_image, 'Image for this language' %><br />
+    <%= f.file_field :language_image %>
+  </div>
+  <br />
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
