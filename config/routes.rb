@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
 
-  devise_for :users, :controllers => { registrations: 'registrations' }
   root to: 'home#index'
+  get 'admins/actions' => 'admins#actions'
+  get 'search' => 'documents#search'
+
+  devise_for :users, :controllers => { registrations: 'registrations' }
+  
+  resources :libraries
+  resources :documents
+  resources :categories
+  resources :languages
+  resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

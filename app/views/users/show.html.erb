@@ -1,0 +1,48 @@
+<h1>Name: <%= @user.name %></h1>
+<h2>Email: <%= @user.email %> (twitter: <%= @user.twitter %>)<br />
+    Company: <%= @user.company %></h2>
+    
+<% if can? :manage, :all %>
+  <h4>User Role: <%= @user.role.upcase %></h4>
+<% end %>
+
+<%= image_tag(@user.user_image.medium.url) %>
+
+<% if can? :manage, :all %>
+  <h2>Saved Documents:</h2>
+    <% if @user.libraries.empty? == false %>
+      <% @user.libraries.each do |library| %>
+      <%= library.document.name %>
+
+      <%= link_to('Show', library_path(library)) %> <% if can? :update, library %> | <%= link_to('Edit', edit_library_path(library), method: :get) %><% end %> <% if can? :destroy, library %> | <%= link_to('Delete', library_path(library), method: :delete, data: {confirm: 'Delete this saved document from your library? Are you sure?!'}) %><% end %>
+      <br /><br />
+      <% end %>
+      <% else %>
+    <h3>There are no libraries for this user yet.<br />Would you like to add a library?  Just click <%= link_to 'here', new_library_path %>.</h3>
+    <% end %>
+<% end %>
+
+<% if !can? :manage, :all %>
+  <% if @user.documents.empty? == false %>
+    <h3>List of documents for this user:</h3>
+      <ul>
+        <% @user.documents.each do |document| %>
+          <li><%= link_to document.name, document_path(document) %></li>
+        <% end %>
+      </ul>
+  <% end %>
+  
+  <h4>Get in contact with <%= mail_to @user.email, @user.name %> to meetup at their next document!</h4>
+
+<% end %>
+
+<% if can? :update, @user %>
+  <%= link_to('Edit', edit_user_path(@user), method: :get) %>
+<% end %>
+
+<% if can? :destroy, @user %>
+  <%= link_to('Delete', user_path(@user), method: :delete, data: {confirm: 'Delete this user? Are you sure?!'}) %>
+<% end %>
+
+<%= link_to 'Index', users_path %>
+<%= link_to 'Back', :back %>
