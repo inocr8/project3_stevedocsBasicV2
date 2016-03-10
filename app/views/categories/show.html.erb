@@ -1,2 +1,32 @@
-<h1>Categories#show</h1>
-<p>Find me in app/views/categories/show.html.erb</p>
+<% if can? :create, Category %>
+  <%= link_to 'New category', new_category_path %>
+<% end %>
+
+<h1><%= @category.name %></h1>
+<h2><%= @category.colour %></h2>
+
+<%= image_tag(@category.category_image.medium.url) %>
+
+<h3><%= @category.description %></h3>
+
+<% if @category.documents.empty? == false %>
+  <h3>List of documents for this Category:</h3>
+    <ul>
+      <% @category.documents.each do |document| %>
+        <li><%= link_to document.name, document_path(document) %></li>
+      <% end %>
+    </ul>
+<% else %>
+  <h4>New documents for <%= @category.name %> to be added soon!</h4>
+<% end %>
+
+<% if can? :update, @category %>
+  <%= link_to('Edit', edit_category_path(@category), method: :get) %>
+<% end %>
+
+<% if can? :destroy, @category %>
+  <%= link_to('Delete', category_path(@category), method: :delete, data: {confirm: 'Delete this category? Are you sure?!'}) %>
+<% end %>
+
+<%= link_to 'Index', categories_path %>
+<%= link_to 'Back', :back %>
