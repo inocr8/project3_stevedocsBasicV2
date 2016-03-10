@@ -2,4 +2,13 @@
   <h1>~ Welcome to SteveDocs ~</h1>
   <h4> basic version </h4>
   <img src="<%= asset_path( 'SteveBot.png' ) %>" />
+  <h2>
+    When will SteveBot be here to help you?
+  </h2>
+  <h1>
+    In <%= distance_of_time_in_words(Time.now, Time.now.end_of_day) %>!!
+  </h1>
+  <form action="https://project3stevedocsapiv1.herokuapp.com/">
+    <input type="submit" value="Click here for sweet Steve love!">
+  </form>
 </div>
